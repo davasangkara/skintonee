@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             val cocokLevel = if (score > 0.8f) "Sangat Cocok" else "Cocok"
-            textViewResult.text = "Hasil Prediksi: $result\nTingkat Kecocokan: $cocokLevel"
+            textViewResult.text = "Kategori : $result\nTingkat Kecocokan: $cocokLevel"
         } catch (e: Exception) {
             Log.e("TFLITE", "Error saat klasifikasi: ${e.message}")
             textViewResult.text = "Kesalahan saat klasifikasi: ${e.message}"
