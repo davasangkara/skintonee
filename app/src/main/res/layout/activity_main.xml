@@ -1,55 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="16dp"
     android:background="@color/tulang"
-    android:padding="16dp">
+    tools:context=".MainActivity">
 
-    <!-- Tampilan gambar -->
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_centerHorizontal="true"
+        android:layout_width="224dp"
+        android:layout_height="224dp"
         android:layout_marginTop="32dp"
+        android:layout_marginBottom="24dp"
         android:scaleType="centerCrop"
         android:src="@drawable/upload" />
 
-    <!-- Tombol untuk memilih gambar -->
     <Button
         android:id="@+id/button_select_image"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imageView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="Pilih Gambar"
         android:textColor="@color/white"
-        android:backgroundTint="@color/navy"
-        android:text="Pilih Gambar" />
+        android:backgroundTint="@color/navy" />
 
-    <!-- Tombol untuk kamera -->
     <Button
         android:id="@+id/button_capture_image"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/button_select_image"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="Kamera"
         android:textColor="@color/white"
-        android:backgroundTint="@color/navy"
-        android:text="Kamera" />
+        android:backgroundTint="@color/navy" />
 
-    <!-- Tampilan hasil prediksi -->
+    <Button
+        android:id="@+id/button_history"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:text="Lihat Riwayat"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/navy" />
+
     <TextView
         android:id="@+id/textView_result"
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:layout_below="@id/button_capture_image"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:textColor="@color/navy"
-        android:textStyle="bold"
+        android:layout_height="wrap_content"
         android:text="Hasil prediksi akan muncul di sini"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/navy"
+        android:gravity="center"/>
 
-</RelativeLayout>
+</LinearLayout>

@@ -36,6 +36,7 @@ android {
 }
 
 dependencies {
+    implementation ("androidx.recyclerview:recyclerview:1.3.2")
     implementation ("org.tensorflow:tensorflow-lite:2.9.0")
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
     implementation ("androidx.core:core-ktx:1.12.0")
