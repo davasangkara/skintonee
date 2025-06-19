@@ -15,22 +15,14 @@ class ImageClassifier(assetManager: AssetManager) {
     private val labelList: List<String>
 
     init {
-        try {
-            interpreter = Interpreter(loadModelFile(assetManager, "model.tflite"))
-            labelList = loadLabelList(assetManager, "labels.txt")
-            if (labelList.isEmpty()) {
-                throw RuntimeException("Error: labels.txt kosong atau tidak bisa dimuat.")
-            }
-        } catch (e: Exception) {
-            Log.e("TFLITE", "Gagal memuat model atau label: ${e.message}")
-            throw RuntimeException("Gagal memuat model atau label: ${e.message}")
-        }
+        interpreter = Interpreter(loadModelFile(assetManager, "model.tflite"))
+        labelList = loadLabelList(assetManager, "labels.txt")
     }
 
     private fun loadModelFile(assetManager: AssetManager, modelPath: String): MappedByteBuffer {
         val fileDescriptor: AssetFileDescriptor = assetManager.openFd(modelPath)
         val inputStream = FileInputStream(fileDescriptor.fileDescriptor)
-        val fileChannel: FileChannel = inputStream.channel
+        val fileChannel = inputStream.channel
         return fileChannel.map(FileChannel.MapMode.READ_ONLY, fileDescriptor.startOffset, fileDescriptor.declaredLength)
     }
 
@@ -40,22 +32,18 @@ class ImageClassifier(assetManager: AssetManager) {
 
     fun classifyImage(inputBuffer: ByteBuffer): Pair<String, Float> {
         return try {
-            val outputArray = Array(1) { FloatArray(labelList.size) }
-            interpreter.run(inputBuffer, outputArray)
+            val output = Array(1) { FloatArray(labelList.size) }
+            interpreter.run(inputBuffer, output)
 
-            val maxIndex = outputArray[0].indices.maxByOrNull { outputArray[0][it] } ?: return Pair("Error", 0.0f)
-            val maxScore = outputArray[0][maxIndex]
-
-            if (maxIndex < 0 || maxIndex >= labelList.size) {
-                Log.e("TFLITE", "Error: Indeks hasil prediksi tidak valid ($maxIndex)")
-                return Pair("Error", 0.0f)
-            }
+            val maxIndex = output[0].indices.maxByOrNull { output[0][it] } ?: -1
+            if (maxIndex == -1) return Pair("Error", 0f)
 
             val label = labelList[maxIndex]
-            Pair(label, maxScore)
+            val score = output[0][maxIndex]
+            Pair(label, score)
         } catch (e: Exception) {
-            Log.e("TFLITE", "Error saat membaca output model: ${e.message}")
-            Pair("Error", 0.0f)
+            Log.e("TFLITE", "Error: ${e.message}")
+            Pair("Error", 0f)
         }
     }
 }

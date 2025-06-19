@@ -5,14 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/tulang"
+    android:background="@color/mblue"
     tools:context=".CardViewActivity">
 
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="386dp"
+        android:layout_width="450dp"
+        android:layout_height="400dp"
         android:background="@drawable/icon"
         android:gravity="center_vertical|center_horizontal"
         android:textColor="@color/white"

@@ -10,7 +10,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import java.lang.StringBuilder
 
 class HistoryActivity : AppCompatActivity() {
 
@@ -53,59 +52,46 @@ class HistoryActivity : AppCompatActivity() {
     private fun setupRecyclerView() {
         historyAdapter = HistoryAdapter(
             historyList,
-            // Aksi untuk klik biasa: panggil dialog detail
-            onItemClick = { item ->
-                showHistoryDetailDialog(item)
-            },
-            // Aksi untuk tekan-lama: panggil dialog hapus
-            onItemLongClick = { item, position ->
-                showDeleteConfirmationDialog(item, position)
-            }
+            onItemClick = { item -> showHistoryDetailDialog(item) },
+            onItemLongClick = { item, position -> showDeleteConfirmationDialog(item, position) }
         )
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = historyAdapter
     }
 
-    // FUNGSI BARU: Untuk menampilkan detail saat item di-klik
     private fun showHistoryDetailDialog(historyEntry: String) {
         val parts = historyEntry.split("|")
-        if (parts.size < 4) return // Keluar jika format data tidak valid
+        if (parts.size < 4) return
 
         val date = parts[0]
         val label = parts[1]
         val score = parts[2]
         val recommendation = parts[3]
 
-        // Mendapatkan deskripsi berdasarkan label
         val description = getSkinToneDescription(label)
 
-        // Membangun teks untuk ditampilkan di dialog
         val message = StringBuilder().apply {
             append("Kategori: $label\n\n")
             append("Akurasi: $score%\n")
             append("Rekomendasi: $recommendation\n\n")
-            append("Deskripsi:\n$description\n\n")
+            append("Deskripsi Wajah:\n$description\n\n")
             append("Tanggal Deteksi:\n$date")
         }.toString()
 
         AlertDialog.Builder(this)
             .setTitle("Detail Hasil Klasifikasi")
             .setMessage(message)
-            .setPositiveButton("Tutup") { dialog, _ ->
-                dialog.dismiss()
-            }
+            .setPositiveButton("Tutup") { dialog, _ -> dialog.dismiss() }
             .show()
     }
 
-    // FUNGSI BARU: Menyediakan deskripsi untuk setiap kategori warna kulit
     private fun getSkinToneDescription(label: String): String {
         return when (label.lowercase()) {
-            "light" -> "Warna kulit terang memiliki jumlah melanin yang lebih sedikit, membuatnya lebih rentan terhadap kerusakan akibat sinar matahari. Penggunaan tabir surya sangat dianjurkan."
-            "fair" -> "Serupa dengan warna kulit terang, kategori 'fair' juga sensitif terhadap paparan UV. Perawatan kulit yang fokus pada hidrasi dan perlindungan UV adalah kunci."
-            "medium" -> "Warna kulit medium atau sawo matang memiliki keseimbangan melanin yang baik, memberikan sedikit perlindungan alami terhadap matahari, namun tetap membutuhkan proteksi."
-            "tan" -> "Warna kulit 'tan' atau kecoklatan memiliki lebih banyak melanin, membuatnya lebih tahan terhadap paparan sinar matahari, tetapi tetap berisiko mengalami hiperpigmentasi."
-            // Tambahkan kategori lain jika ada di model Anda
-            else -> "Tidak ada deskripsi yang tersedia untuk kategori ini."
+            "light" -> "Kulit terang, sensitif terhadap sinar matahari. Cocok dengan warna makeup lembut."
+            "mid-light" -> "Kulit cerah alami dengan rona kuning langsat. Cocok dengan makeup natural."
+            "mid-dark" -> "Kulit cokelat keemasan. Fleksibel terhadap sinar matahari, cocok dengan makeup hangat."
+            "dark" -> "Kulit gelap intens, tahan sinar matahari. Cocok dengan warna makeup kontras."
+            else -> "Deskripsi tidak tersedia untuk kategori ini."
         }
     }
 

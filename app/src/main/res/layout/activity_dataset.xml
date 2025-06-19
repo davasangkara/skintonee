@@ -10,223 +10,156 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/mblue"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:background="@color/navy"
-        tools:context=".user.Dataset">
+        tools:context=".user.Dataset"
+        android:padding="16dp">
 
+        <!-- Toolbar -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="1dp"
             app:navigationIcon="@drawable/back"
-            app:titleTextColor="@color/white"
-            app:title="Kembali"/>
+            app:title="Kembali"
+            app:titleTextColor="@color/white" />
 
-
+        <!-- Header Card -->
         <androidx.cardview.widget.CardView
-            android:layout_width="130dp"
-            android:layout_height="59dp"
-            android:layout_margin="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             app:cardBackgroundColor="@color/tulang"
             app:cardCornerRadius="10dp"
-            app:cardElevation="0dp"
-            app:cardMaxElevation="0dp"
+            app:cardElevation="2dp"
             app:cardUseCompatPadding="true">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center_horizontal"
                 android:gravity="center"
+                android:padding="10dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:text="Dataset"
+                    android:textColor="@color/mblue"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-                    android:textColor="@color/navy"
+        <!-- Info Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:cardBackgroundColor="@color/tulang"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dataset:"
+                    android:textColor="@color/mblue"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="312dp"
-            android:layout_height="165dp"
-            android:layout_margin="70dp"
-            app:cardBackgroundColor="@color/tulang"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="0dp"
-            app:cardMaxElevation="0dp"
-            app:cardUseCompatPadding="true">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:gravity="center"
-                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Skin Tone Classification"
+                    android:textColor="@color/mblue"
+                    android:textSize="20sp"
+                    android:textStyle="italic" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Dataset : "
-                    android:textColor="@color/navy"
+                    android:text="• Sumber: Kaggle"
+                    android:textColor="@color/mblue"
+                    android:textSize="16sp"
                     android:textStyle="italic"
-                    android:layout_gravity="center"
-                    android:textSize="20sp" />
+                    android:layout_marginTop="4dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="• Author: DucNguyen168 "
+                    android:textColor="@color/mblue"
+                    android:textSize="16sp"
+                    android:textStyle="italic"
+                    android:layout_marginTop="4dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Fruits Classification"
-                    android:textColor="@color/navy"
-                    android:textSize="20sp"
-                    android:textStyle="italic" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="• Sumber: \n Kaggle,Author karimabdulnabi"
-                    android:textColor="@color/navy"
-                    android:textSize="20sp"
-                    android:textStyle="italic" />
-
-                <TextView
-                    android:layout_width="286dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="• Nama Dataset: \n Classification Fruits 10"
-                    android:textColor="@color/navy"
+                    android:text="• Nama Dataset: Skin tone "
+                    android:textColor="@color/mblue"
+                    android:textSize="16sp"
                     android:textStyle="italic"
-                    android:textSize="20sp" />
-
+                    android:layout_marginTop="4dp" />
             </LinearLayout>
-
         </androidx.cardview.widget.CardView>
 
+        <!-- Jumlah Data Card -->
         <androidx.cardview.widget.CardView
-            android:layout_width="312dp"
-            android:layout_height="350dp"
-            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="32dp"
             app:cardBackgroundColor="@color/tulang"
             app:cardCornerRadius="10dp"
-            app:cardElevation="0dp"
-            app:cardMaxElevation="0dp"
+            app:cardElevation="2dp"
             app:cardUseCompatPadding="true">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="16dp">
 
                 <TextView
-                    android:layout_width="284dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="• Jumlah Pictures Apple : 89"
-                    android:textColor="@color/navy"
-                    android:textSize="20sp"
+                    android:text="• Jumlah Pictures Light: 9.769"
+                    android:textColor="@color/mblue"
+                    android:textSize="16sp"
                     android:textStyle="italic" />
 
-                <TextView
-                    android:layout_width="284dp"
+                <TextView android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="• Jumlah Pictures Avocado : 105"
-                    android:textColor="@color/navy"
-                    android:textSize="20sp"
+                    android:text="• Jumlah Pictures Dark: 8.640"
+                    android:textColor="@color/mblue"
+                    android:textSize="16sp"
                     android:textStyle="italic" />
 
-                <TextView
-                    android:layout_width="276dp"
+                <TextView android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity=""
-                    android:text="• Jumlah Pictures Banana : 106"
-                    android:textColor="@color/navy"
-                    android:textSize="20sp"
+                    android:text="• Jumlah Pictures Mid-light: 6.844"
+                    android:textColor="@color/mblue"
+                    android:textSize="16sp"
                     android:textStyle="italic" />
 
-                <TextView
-                    android:layout_width="276dp"
+                <TextView android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity=""
-                    android:text="• Jumlah Pictures Cherry : 105"
-                    android:textColor="@color/navy"
-                    android:textSize="20sp"
+                    android:text="• Jumlah Pictures Mid-dark: 10.600"
+                    android:textColor="@color/mblue"
+                    android:textSize="16sp"
                     android:textStyle="italic" />
-
-                <TextView
-                    android:layout_width="276dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity=""
-                    android:text="• Jumlah Pictures Kiwi : 105"
-                    android:textColor="@color/navy"
-                    android:textSize="20sp"
-                    android:textStyle="italic" />
-
-                <TextView
-                    android:layout_width="276dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity=""
-                    android:text="• Jumlah Pictures Mango : 105"
-                    android:textColor="@color/navy"
-                    android:textSize="20sp"
-                    android:textStyle="italic" />
-
-                <TextView
-                    android:layout_width="276dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity=""
-                    android:text="• Jumlah Pictures Orange : 97"
-                    android:textColor="@color/navy"
-                    android:textSize="20sp"
-                    android:textStyle="italic" />
-
-                <TextView
-                    android:layout_width="276dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity=""
-                    android:text="• Jumlah Pictures Pineapple : 105"
-                    android:textColor="@color/navy"
-                    android:textSize="20sp"
-                    android:textStyle="italic" />
-
-                <TextView
-                    android:layout_width="276dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity=""
-                    android:text="• Jumlah Pictures Strawberries : 103"
-                    android:textColor="@color/navy"
-                    android:textSize="20sp"
-                    android:textStyle="italic" />
-
-                <TextView
-                    android:layout_width="276dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity=""
-                    android:text="• Jumlah Pictures Watermelon : 105"
-                    android:textColor="@color/navy"
-                    android:textSize="20sp"
-                    android:textStyle="italic" />
-
-
             </LinearLayout>
-
-
-
         </androidx.cardview.widget.CardView>
 
     </LinearLayout>

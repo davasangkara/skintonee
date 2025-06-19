@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/navy"
+    android:background="@color/mblue"
     tools:context=".SplashScreenActivity">
 
 
@@ -26,7 +26,7 @@
         android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-black"
         android:text="Skin tone klasifikasi"
-        android:textColor="@color/navy"
+        android:textColor="@color/mblue"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +72,7 @@
         android:backgroundTint="@color/tulang"
         android:layout_gravity="center"
         android:text="Masuk Aplikasi"
-        android:textColor="@color/navy"
+        android:textColor="@color/mblue"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

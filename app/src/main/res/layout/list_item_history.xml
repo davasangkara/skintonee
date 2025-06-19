@@ -1,37 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_history_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="?android:attr/selectableItemBackground"
-    android:layout_marginBottom="8dp">
+    android:padding="12dp"
+    android:layout_marginBottom="8dp"
+    android:background="?attr/selectableItemBackground"
+    android:elevation="2dp">
 
     <TextView
         android:id="@+id/textView_history_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Kategori: Light"
-        android:textSize="18sp"
+        android:text="Kategori:"
+        android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="@android:color/black" />
+        android:textColor="?android:attr/textColorPrimary" />
 
     <TextView
         android:id="@+id/textView_history_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Akurasi: 95.50%, Rekomendasi: Sangat Cocok"
+        android:text="Akurasi: 0.00% | Rekomendasi:"
         android:textSize="14sp"
-        android:layout_marginTop="4dp"
-        android:textColor="@android:color/darker_gray" />
+        android:layout_marginTop="2dp"
+        android:textColor="?android:attr/textColorSecondary" />
 
     <TextView
         android:id="@+id/textView_history_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="10-06-2025 14:30:15"
+        android:text="Tanggal:"
         android:textSize="12sp"
-        android:layout_marginTop="8dp"
-        android:textColor="@android:color/tertiary_text_light" />
+        android:layout_marginTop="6dp"
+        android:textColor="?android:attr/textColorTertiary" />
 
 </LinearLayout>

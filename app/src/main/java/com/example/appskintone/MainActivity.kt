@@ -1,3 +1,4 @@
+// MainActivity.kt
 package com.example.appskintone
 
 import android.app.Activity
@@ -14,6 +15,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appskintone.ml.ImageClassifier
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.face.FaceDetection
+import com.google.mlkit.vision.face.FaceDetectorOptions
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
@@ -67,68 +71,85 @@ class MainActivity : AppCompatActivity() {
             if (originalBitmap != null) {
                 val resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, 224, 224, true)
                 imageView.setImageBitmap(resizedBitmap)
-                classifyImage(resizedBitmap)
+                detectFaceAndClassify(resizedBitmap)
             } else {
                 textViewResult.text = "Kesalahan: Gagal mengambil gambar."
             }
         }
     }
 
-    private fun classifyImage(bitmap: Bitmap) {
-        try {
-            val inputBuffer = convertBitmapToByteBuffer(bitmap)
-            val (result, score) = imageClassifier.classifyImage(inputBuffer)
+    private fun detectFaceAndClassify(bitmap: Bitmap) {
+        val options = FaceDetectorOptions.Builder()
+            .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
+            .build()
 
-            if (result == "Error") {
-                textViewResult.text = "Kesalahan: Model gagal mengenali gambar."
-                return
+        val faceDetector = FaceDetection.getClient(options)
+        val image = InputImage.fromBitmap(bitmap, 0)
+
+        faceDetector.process(image)
+            .addOnSuccessListener { faces ->
+                if (faces.isEmpty()) {
+                    textViewResult.text = "Tidak ada wajah terdeteksi. Gunakan gambar wajah."
+                    Toast.makeText(this, "Gagal: Tidak ada wajah terdeteksi.", Toast.LENGTH_LONG).show()
+                    return@addOnSuccessListener
+                }
+
+                try {
+                    val inputBuffer = convertBitmapToByteBuffer(bitmap)
+                    val (result, score) = imageClassifier.classifyImage(inputBuffer)
+
+                    if (result == "Error") {
+                        textViewResult.text = "Kesalahan: Model gagal mengenali gambar."
+                        return@addOnSuccessListener
+                    }
+
+                    showResultDialog(result, score)
+                } catch (e: Exception) {
+                    Log.e("TFLITE", "Error saat klasifikasi: ${e.message}")
+                    textViewResult.text = "Kesalahan saat klasifikasi: ${e.message}"
+                }
             }
-
-            showResultDialog(result, score, bitmap)
-        } catch (e: Exception) {
-            Log.e("TFLITE", "Error saat klasifikasi: ${e.message}")
-            textViewResult.text = "Kesalahan saat klasifikasi: ${e.message}"
-        }
+            .addOnFailureListener { e ->
+                textViewResult.text = "Gagal mendeteksi wajah: ${e.message}"
+                Log.e("MLKIT", "Deteksi wajah gagal: ${e.message}")
+            }
     }
 
-    private fun showResultDialog(label: String, score: Float, bitmap: Bitmap) {
+    private fun showResultDialog(label: String, score: Float) {
         val cocokLevel = when {
             score > 0.85f -> "Sangat Cocok"
             score > 0.6f -> "Cocok"
             else -> "Kurang Cocok"
         }
 
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Hasil Klasifikasi")
-
         val formattedScore = String.format("%.2f", score * 100)
-        builder.setMessage("Kategori: $label\nAkurasi: $formattedScore%\nRekomendasi: $cocokLevel")
 
-        builder.setPositiveButton("Simpan ke Riwayat") { _, _ ->
-            saveToHistory(label, formattedScore, cocokLevel)
-        }
-
-        builder.setNegativeButton("Deteksi Ulang") { dialog, _ ->
-            dialog.dismiss()
-        }
-
-        builder.setCancelable(false)
-        builder.show()
+        AlertDialog.Builder(this)
+            .setTitle("Hasil Klasifikasi")
+            .setMessage("Kategori: $label\nAkurasi: $formattedScore%\nRekomendasi: $cocokLevel")
+            .setPositiveButton("Simpan ke Riwayat") { _, _ ->
+                saveToHistory(label, score, cocokLevel)
+            }
+            .setNegativeButton("Deteksi Ulang") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setCancelable(false)
+            .show()
     }
 
-    private fun saveToHistory(label: String, score: String, rekomendasi: String) {
+    private fun saveToHistory(label: String, score: Float, rekomendasi: String) {
         val sharedPreferences = getSharedPreferences("history_data", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
 
-        val timestamp = System.currentTimeMillis()
         val waktu = java.text.SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
-            .format(java.util.Date(timestamp))
+            .format(java.util.Date())
 
-        val entry = "$waktu|$label|$score|$rekomendasi"
+        val formattedScore = String.format("%.2f", score * 100)
+        val entry = "$waktu|$label|$formattedScore|$rekomendasi"
 
-        val existingData = sharedPreferences.getStringSet("history_list", mutableSetOf())?.toMutableSet() ?: mutableSetOf()
-        existingData.add(entry)
-        editor.putStringSet("history_list", existingData)
+        val historySet = sharedPreferences.getStringSet("history_list", mutableSetOf())?.toMutableSet() ?: mutableSetOf()
+        historySet.add(entry)
+        editor.putStringSet("history_list", historySet)
         editor.apply()
 
         Toast.makeText(this, "Disimpan ke riwayat", Toast.LENGTH_SHORT).show()
